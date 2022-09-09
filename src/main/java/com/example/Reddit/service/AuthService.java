@@ -1,5 +1,7 @@
 package com.example.Reddit.service;
 
+import com.example.Reddit.dto.AuthenticationResponse;
+import com.example.Reddit.dto.LoginRequest;
 import com.example.Reddit.dto.RegisterRequest;
 import com.example.Reddit.exception.SpringRedditException;
 import com.example.Reddit.model.NotificationEmail;
@@ -7,8 +9,10 @@ import com.example.Reddit.model.User;
 import com.example.Reddit.model.VerificationToken;
 import com.example.Reddit.repository.UserRepository;
 import com.example.Reddit.repository.VerificationTokenRepository;
+import com.example.Reddit.security.JwtProvider;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +33,8 @@ public class AuthService {
     private final VerificationTokenRepository verificationTokenRepository;
     private final MailContentBuilder mailContentBuilder;
     private final MailService mailService;
+    private final AuthenticationManager authenticationManager;
+    private final JwtProvider jwtProvider;
 
     @Transactional
     public void signup(RegisterRequest registerRequest) {
@@ -43,7 +49,7 @@ public class AuthService {
         String token = generateVerificationToken(user);
         String message = mailContentBuilder.build("Thank you for signing up to Reddit App, please click on the below url to activate your account: "
                 + ACTIVATION_EMAIL + "/" + token);
-
+        log.info("User Registration Successfully!");
         mailService.sendMail(new NotificationEmail("Please activate your account", user.getEmail(), message));
     }
 
