@@ -1,6 +1,7 @@
 package com.example.Reddit.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.lang.Nullable;
@@ -17,6 +18,7 @@ import static javax.persistence.GenerationType.SEQUENCE;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Builder
 public class Post {
     @Id
     @GeneratedValue(strategy = SEQUENCE)

@@ -94,6 +94,7 @@ public class AuthService {
         return new AuthenticationResponse(authenticationToken, loginRequest.getUsername());
     }
 
+    @Transactional
     User getCurrentUser() {
         CustomUserDetails principal = (CustomUserDetails) SecurityContextHolder.
                 getContext().getAuthentication().getPrincipal();

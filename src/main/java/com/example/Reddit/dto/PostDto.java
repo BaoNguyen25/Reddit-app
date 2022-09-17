@@ -6,14 +6,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class PostResponse {
+public class PostDto {
     private Long id;
-    private String postName;
-    private String url;
+    private String name;
     private String description;
-    private String userName;
-    private String subredditName;
+    private Integer postCount;
 }
+
