@@ -5,14 +5,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
+import java.time.Instant;
+
 @Builder
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PostDto {
+public class CommentDto {
     private Long id;
-    private String name;
-    private String description;
-    private Integer postCount;
+    private Long postId;
+    private Instant createdDate;
+    private String text;
+    private String userName;
 }
-

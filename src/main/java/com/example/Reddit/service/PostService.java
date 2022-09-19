@@ -1,6 +1,5 @@
 package com.example.Reddit.service;
 
-import com.example.Reddit.dto.PostDto;
 import com.example.Reddit.dto.PostRequest;
 import com.example.Reddit.dto.PostResponse;
 import com.example.Reddit.exception.PostNotFoundException;
@@ -87,6 +86,8 @@ public class PostService {
                 .postName(post.getPostName())
                 .description(post.getDescription())
                 .url(post.getUrl())
+                .userName(post.getUser().getUsername())
+                .subredditName(post.getSubreddit().getName())
                 .build();
     }
 

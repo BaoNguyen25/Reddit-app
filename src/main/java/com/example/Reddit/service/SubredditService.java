@@ -48,7 +48,7 @@ public class SubredditService {
     }
 
     private Subreddit mapToSubreddit(SubredditDto subredditDto) {
-        return Subreddit.builder().name("/r" + subredditDto.getName())
+        return Subreddit.builder().name(subredditDto.getName())
                 .description(subredditDto.getDescription())
                 .user(authService.getCurrentUser())
                 .createdDate(now())
