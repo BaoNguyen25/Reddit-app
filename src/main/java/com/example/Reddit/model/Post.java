@@ -30,6 +30,7 @@ public class Post {
     @Nullable
     @Lob
     private String description;
+    @Column(columnDefinition = "integer default 0")
     private Integer voteCount;
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "userId", referencedColumnName = "userId")

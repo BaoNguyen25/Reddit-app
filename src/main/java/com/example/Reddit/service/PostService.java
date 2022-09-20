@@ -7,9 +7,11 @@ import com.example.Reddit.exception.SubredditNotFoundException;
 import com.example.Reddit.model.Post;
 import com.example.Reddit.model.Subreddit;
 import com.example.Reddit.model.User;
+import com.example.Reddit.repository.CommentRepository;
 import com.example.Reddit.repository.PostRepository;
 import com.example.Reddit.repository.SubredditRepository;
 import com.example.Reddit.repository.UserRepository;
+import com.github.marlonlom.utilities.timeago.TimeAgo;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -28,6 +30,7 @@ import static java.util.stream.Collectors.toList;
 @Transactional
 public class PostService {
     private final PostRepository postRepository;
+    private final CommentRepository commentRepository;
     private final SubredditRepository subredditRepository;
     private final UserRepository userRepository;
     private final AuthService authService;
@@ -71,7 +74,7 @@ public class PostService {
     }
 
     private Post mapToPost(PostRequest postRequest, Subreddit subreddit, User user) {
-        return Post.builder().postId(postRequest.getPostId())
+        return Post.builder()
                 .postName(postRequest.getPostName())
                 .url(postRequest.getUrl())
                 .description(postRequest.getDescription())
@@ -88,7 +91,20 @@ public class PostService {
                 .url(post.getUrl())
                 .userName(post.getUser().getUsername())
                 .subredditName(post.getSubreddit().getName())
+                .voteCount(post.getVoteCount())
+                .commentCount(commentCount(post))
+                .duration(getDuration(post))
                 .build();
     }
+
+    Integer commentCount(Post post) {
+        return commentRepository.findByPost(post).size();
+    }
+
+    String getDuration(Post post) {
+        return TimeAgo.using(post.getCreatedDate().toEpochMilli());
+    }
+
+
 
 }
