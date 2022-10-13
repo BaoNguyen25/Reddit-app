@@ -79,6 +79,7 @@ public class PostService {
                 .url(postRequest.getUrl())
                 .description(postRequest.getDescription())
                 .subreddit(subreddit)
+                .voteCount(0)
                 .createdDate(Instant.now())
                 .user(user)
                 .build();
